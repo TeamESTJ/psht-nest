@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Report } from './entities/report.entity';
 import { ReportService } from './report.service';
 
+const testId = 4;
 const testContent1 = 'content test';
 const testDate1 = new Date('2000-01-01');
 
@@ -27,10 +28,10 @@ describe('ReportService', () => {
           provide: getRepositoryToken(Report),
           useValue: {
             find: jest.fn().mockResolvedValue(reportArray),
-            create: jest.fn().mockResolvedValue(oneReport),
-            save: jest.fn(),
-            update: jest.fn().mockResolvedValue(true),
-            delete: jest.fn().mockResolvedValue(true),
+            findOne: jest.fn().mockResolvedValue(oneReport),
+            save: jest.fn().mockResolvedValue(oneReport),
+            update: jest.fn().mockResolvedValue(oneReport),
+            delete: jest.fn(),
           },
         },
       ],
@@ -43,5 +44,47 @@ describe('ReportService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(repo).toBeDefined();
+  });
+
+  describe('findAll', () => {
+    it('should return an array of reports', async () => {
+      const reports = await service.findAll();
+      expect(reports).toEqual(reportArray);
+    });
+  });
+
+  describe('create', () => {
+    it('should return the created report and call the save method', async () => {
+      const createdReport = await service.create({
+        content: testContent1,
+        create_date: testDate1,
+      });
+      expect(createdReport).toEqual(oneReport);
+      expect(repo.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('update', () => {
+    it('should call update method', async () => {
+      const report = await service.update(testId, {
+        content: testContent1,
+        create_date: testDate1,
+      });
+
+      expect(report).toEqual(oneReport);
+      expect(repo.update).toBeCalledTimes(1);
+      expect(repo.update).toBeCalledWith(testId, {
+        content: testContent1,
+        create_date: testDate1,
+      });
+    });
+  });
+
+  describe('remove', () => {
+    it('should call delete with appropriate id', async () => {
+      await service.remove(testId);
+      expect(repo.delete).toBeCalledTimes(1);
+      expect(repo.delete).toBeCalledWith(testId);
+    });
   });
 });
