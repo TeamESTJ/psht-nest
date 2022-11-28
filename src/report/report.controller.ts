@@ -17,7 +17,6 @@ export class ReportController {
 
   @Post()
   create(@Body() createReportDto: CreateReportDto) {
-    createReportDto.create_date = new Date();
     return this.reportService.create(createReportDto);
   }
 

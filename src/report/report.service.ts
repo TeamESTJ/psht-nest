@@ -12,6 +12,7 @@ export class ReportService {
   ) {}
 
   create(createReportDto: CreateReportDto) {
+    createReportDto.create_date = new Date();
     return this.reportRepository.save(createReportDto);
   }
 
