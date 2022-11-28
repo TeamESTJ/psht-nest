@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,14 +11,10 @@ import { ReportModule } from './report/report.module';
     ReportModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'wonsang',
-      password: '',
-      database: 'testdb',
       entities: [Report],
       synchronize: true,
     }),
+    ConfigModule.forRoot({ envFilePath: 'src/config/.env.local' }),
   ],
   controllers: [AppController],
   providers: [AppService],

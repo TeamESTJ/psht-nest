@@ -10,4 +10,9 @@ export class Report {
 
   @Column('timestamp with time zone')
   create_date: Date;
+
+  constructor(theContent: string, theDate: Date) {
+    this.content = theContent;
+    this.create_date = theDate;
+  }
 }
