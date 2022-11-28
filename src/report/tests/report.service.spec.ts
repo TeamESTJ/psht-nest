@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Report } from './entities/report.entity';
-import { ReportService } from './report.service';
+import { Report } from '../entities/report.entity';
+import { ReportService } from '../report.service';
 
 const testId = 4;
 const testContent1 = 'content test';

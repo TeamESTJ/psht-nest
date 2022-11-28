@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Report } from './entities/report.entity';
-import { ReportController } from './report.controller';
-import { ReportService } from './report.service';
+import { Report } from '../entities/report.entity';
+import { ReportController } from '../report.controller';
+import { ReportService } from '../report.service';
 
 describe('ReportController', () => {
   let controller: ReportController;
